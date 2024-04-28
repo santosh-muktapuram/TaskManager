@@ -1,0 +1,60 @@
+const express = require('express')
+const app = express()
+const fs = require('fs').promises
+const courseData = require('./courses.json')
+const port = 3000
+app.use(express.json)
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+// app.get("/courses", (req, res) => {
+//   console.log("Hitting courses resource")
+//   // fs.readFile("./courses.json", encodi)
+//   fs.readFile('./courses.json', {encoding: 'utf-8', flag: 'r'}, function(err, data) {
+//     console.log('Data has been read')
+//     if(err) {
+//       return res.status(500).send("something went wrong")
+//     }
+//     var jsonObject = JSON.parse(data);
+//     return res.status(200).json(jsonObject)
+//   });
+// })
+
+app.get("/courses", async (req, res) => {
+  console.log("Hitting courses resource");
+
+  try {
+    const data = await fs.readFile('./courses.json', { encoding: 'utf-8' });
+    const jsonObject = JSON.parse(data);
+    return res.status(200).json(jsonObject);
+  } catch (err) {
+    console.error(err); // Log the error for debugging
+    return res.status(500).send("something went wrong");
+  }
+});
+
+app.post("/courses", async (req, res) => {
+  console.log("Hitting courses post request")
+  try {
+    // const jsonObject = await fs.readFile('./courses.json', { encoding: 'utf-8' });
+    // const parsedJsonObject = JSON.parse(data);
+    // console.log(jsonObject);
+    // console.log(parsedJsonObject.courses);
+    // const userCourse = req.body;
+    // await fs.writeFile("./courses", JSON.stringify(jsonObject), { encoding: 'utf-8', flag: 'w' })
+    return res.status(200).send("creating courses");
+  } catch (err) {
+    console.error(err); // Log the error for debugging
+    return res.status(500).send("something went wrong");
+  }
+})
+
+app.listen(port, (err) => {
+  if(err) {
+    console.log("Can't start server, Something is wrong")
+  } else {
+    console.log(`Server started, running server at http://localhost:${port}`)
+  }
+})

@@ -1,0 +1,14 @@
+{
+    "courses": [
+        {
+            "courseId": 1,
+            "name": "Backendd",
+            "averageRating": 4.5
+        },
+        {
+            "courseId": 2,
+            "name": "Frontend",
+            "averageRating": 4.3
+        }
+    ]
+}
